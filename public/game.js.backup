@@ -1,0 +1,1482 @@
+/* =========================================================
+   HUSTLE LIFE - GAME ENGINE
+   Frontend prototype
+========================================================= */
+
+
+/* =========================================================
+   PLAYER DATA
+========================================================= */
+
+const player = {
+
+    name: "",
+
+    gender: "male",
+
+    age: 18,
+
+    balance: 100000000000,
+
+    bankBalance: 0,
+
+    x: 50,
+
+    y: 50,
+
+    reputation: 0,
+
+    businesses: [],
+
+    vehicles: [],
+
+    properties: [],
+
+    transactions: []
+
+};
+
+
+/* =========================================================
+   START CHARACTER CREATION
+========================================================= */
+
+function showCharacterCreation() {
+
+    const username =
+        document.getElementById("username").value.trim();
+
+    if (!username) {
+
+        alert("Please enter your character name.");
+
+        return;
+    }
+
+
+    document.getElementById("characterName").value =
+        username;
+
+    document.getElementById("previewName").textContent =
+        username;
+
+
+    document
+        .getElementById("loginScreen")
+        .classList.add("hidden");
+
+
+    document
+        .getElementById("characterScreen")
+        .classList.remove("hidden");
+
+}
+
+
+/* =========================================================
+   CHARACTER NAME PREVIEW
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const characterName =
+        document.getElementById("characterName");
+
+    if (characterName) {
+
+        characterName.addEventListener(
+            "input",
+            function () {
+
+                document.getElementById(
+                    "previewName"
+                ).textContent =
+                    this.value || "Your Character";
+
+            }
+        );
+
+    }
+
+});
+
+
+/* =========================================================
+   SELECT GENDER
+========================================================= */
+
+function selectGender(gender) {
+
+    player.gender = gender;
+
+
+    const maleButton =
+        document.getElementById("maleBtn");
+
+    const femaleButton =
+        document.getElementById("femaleBtn");
+
+
+    maleButton.classList.remove("selected");
+
+    femaleButton.classList.remove("selected");
+
+
+    if (gender === "male") {
+
+        maleButton.classList.add("selected");
+
+        document.getElementById(
+            "characterAvatar"
+        ).textContent = "👨🏿";
+
+    }
+
+
+    if (gender === "female") {
+
+        femaleButton.classList.add("selected");
+
+        document.getElementById(
+            "characterAvatar"
+        ).textContent = "👩🏿";
+
+    }
+
+}
+
+
+/* =========================================================
+   CREATE CHARACTER
+========================================================= */
+
+function createCharacter() {
+
+    const name =
+        document
+            .getElementById("characterName")
+            .value
+            .trim();
+
+
+    const age =
+        Number(
+            document.getElementById("age").value
+        );
+
+
+    if (!name) {
+
+        alert("Please enter a character name.");
+
+        return;
+    }
+
+
+    player.name = name;
+
+    player.age = age;
+
+
+    const avatar =
+        player.gender === "male"
+            ? "👨🏿"
+            : "👩🏿";
+
+
+    document.getElementById(
+        "playerName"
+    ).textContent =
+        player.name;
+
+
+    document.getElementById(
+        "playerAge"
+    ).textContent =
+        `${player.age} years • Citizen`;
+
+
+    document.getElementById(
+        "topAvatar"
+    ).textContent =
+        avatar;
+
+
+    document.getElementById(
+        "player"
+    ).textContent =
+        avatar;
+
+
+    updateMoneyDisplay();
+
+
+    player.transactions.push({
+
+        type: "Starting Balance",
+
+        amount: 100000000000,
+
+        description:
+            "Hustle Life starting capital",
+
+        date:
+            new Date().toLocaleString()
+
+    });
+
+
+    document
+        .getElementById("characterScreen")
+        .classList.add("hidden");
+
+
+    document
+        .getElementById("gameScreen")
+        .classList.remove("hidden");
+
+
+    updatePlayer();
+
+}
+
+
+/* =========================================================
+   MONEY DISPLAY
+========================================================= */
+
+function updateMoneyDisplay() {
+
+    const balanceElement =
+        document.getElementById("balance");
+
+
+    if (balanceElement) {
+
+        balanceElement.textContent =
+            player.balance.toLocaleString();
+
+    }
+
+}
+
+
+/* =========================================================
+   PLAYER MOVEMENT
+========================================================= */
+
+function move(direction) {
+
+    const step = 4;
+
+
+    if (direction === "up") {
+
+        player.y -= step;
+
+    }
+
+
+    if (direction === "down") {
+
+        player.y += step;
+
+    }
+
+
+    if (direction === "left") {
+
+        player.x -= step;
+
+    }
+
+
+    if (direction === "right") {
+
+        player.x += step;
+
+    }
+
+
+    player.x =
+        Math.max(
+            8,
+            Math.min(92, player.x)
+        );
+
+
+    player.y =
+        Math.max(
+            12,
+            Math.min(88, player.y)
+        );
+
+
+    updatePlayer();
+
+}
+
+
+/* =========================================================
+   UPDATE PLAYER POSITION
+========================================================= */
+
+function updatePlayer() {
+
+    const character =
+        document.getElementById("player");
+
+
+    if (!character) {
+
+        return;
+
+    }
+
+
+    character.style.left =
+        player.x + "%";
+
+
+    character.style.top =
+        player.y + "%";
+
+}
+
+
+/* =========================================================
+   CITY INTERACTION
+========================================================= */
+
+function interact() {
+
+    alert(
+        `Welcome to Hustle City, ${player.name}!\n\n` +
+        `Your current cash: ₦${player.balance.toLocaleString()}`
+    );
+
+}
+
+
+/* =========================================================
+   LOCATION INTERACTION
+========================================================= */
+
+function locationInteraction(location) {
+
+    if (location === "bank") {
+
+        openPanel("bank");
+
+        return;
+
+    }
+
+
+    if (location === "business") {
+
+        openPanel("business");
+
+        return;
+
+    }
+
+
+    if (location === "police") {
+
+        openPanel("police");
+
+        return;
+
+    }
+
+
+    if (location === "home") {
+
+        showMessage(
+            "🏠 Residential Area\n\n" +
+            "Properties will be available here."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   OPEN GAME PANEL
+========================================================= */
+
+function openPanel(type) {
+
+    const panel =
+        document.getElementById("gamePanel");
+
+
+    const content =
+        document.getElementById("panelContent");
+
+
+    panel.classList.remove("hidden");
+
+
+    /* =====================================================
+       PHONE
+    ===================================================== */
+
+    if (type === "phone") {
+
+        content.innerHTML = `
+
+            <h2>📱 Virtual Phone</h2>
+
+            <p>
+                Your personal phone inside Hustle Life.
+            </p>
+
+
+            <button
+                class="panel-button"
+                onclick="openPanel('chat')">
+
+                💬 Messages
+
+            </button>
+
+
+            <button
+                class="panel-button"
+                onclick="showMessage(
+                    '📞 Calling system will be connected to multiplayer players.'
+                )">
+
+                📞 Calls
+
+            </button>
+
+
+            <button
+                class="panel-button"
+                onclick="openPanel('transfer')">
+
+                💸 Money Transfer
+
+            </button>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       CHAT
+    ===================================================== */
+
+    if (type === "chat") {
+
+        content.innerHTML = `
+
+            <h2>💬 Messages</h2>
+
+            <p>
+                Your multiplayer messages will appear here.
+            </p>
+
+
+            <input
+                id="chatMessage"
+                type="text"
+                placeholder="Type a message..."
+                style="
+                    width:100%;
+                    padding:14px;
+                    margin-top:15px;
+                    background:#080c11;
+                    color:white;
+                    border:1px solid #293642;
+                    border-radius:10px;
+                "
+            >
+
+
+            <button
+                class="panel-button"
+                onclick="sendChatMessage()">
+
+                📨 Send Message
+
+            </button>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       BANK
+    ===================================================== */
+
+    if (type === "bank") {
+
+        content.innerHTML = `
+
+            <h2>🏦 Hustle Bank</h2>
+
+            <p>
+                Manage your virtual finances.
+            </p>
+
+
+            <div class="panel-button">
+
+                💵 Cash
+
+                <br>
+
+                <strong>
+                    ₦${player.balance.toLocaleString()}
+                </strong>
+
+            </div>
+
+
+            <div class="panel-button">
+
+                🏦 Bank Balance
+
+                <br>
+
+                <strong>
+                    ₦${player.bankBalance.toLocaleString()}
+                </strong>
+
+            </div>
+
+
+            <div class="panel-button">
+
+                💎 Total Wealth
+
+                <br>
+
+                <strong>
+                    ₦${(
+                        player.balance +
+                        player.bankBalance
+                    ).toLocaleString()}
+                </strong>
+
+            </div>
+
+
+            <button
+                class="panel-button"
+                onclick="depositMoney()">
+
+                ⬆️ Deposit Money
+
+            </button>
+
+
+            <button
+                class="panel-button"
+                onclick="withdrawMoney()">
+
+                ⬇️ Withdraw Money
+
+            </button>
+
+
+            <button
+                class="panel-button"
+                onclick="showTransactions()">
+
+                📜 Transaction History
+
+            </button>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       MONEY TRANSFER
+    ===================================================== */
+
+    if (type === "transfer") {
+
+        content.innerHTML = `
+
+            <h2>💸 Money Transfer</h2>
+
+            <p>
+                Send virtual money to another player.
+            </p>
+
+
+            <input
+                id="recipient"
+                type="text"
+                placeholder="Recipient username"
+                style="
+                    width:100%;
+                    padding:14px;
+                    margin-top:15px;
+                    background:#080c11;
+                    color:white;
+                    border:1px solid #293642;
+                    border-radius:10px;
+                "
+            >
+
+
+            <input
+                id="transferAmount"
+                type="number"
+                min="1"
+                placeholder="Amount"
+                style="
+                    width:100%;
+                    padding:14px;
+                    margin-top:10px;
+                    background:#080c11;
+                    color:white;
+                    border:1px solid #293642;
+                    border-radius:10px;
+                "
+            >
+
+
+            <button
+                class="panel-button"
+                onclick="transferMoney()">
+
+                💸 Send Money
+
+            </button>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       BUSINESS
+    ===================================================== */
+
+    if (type === "business") {
+
+        content.innerHTML = `
+
+            <h2>🏢 Businesses</h2>
+
+            <p>
+                Build your virtual business empire.
+            </p>
+
+
+            <button
+                class="panel-button"
+                onclick="showMessage(
+                    '🏪 Business Marketplace coming next.'
+                )">
+
+                🏪 Business Marketplace
+
+            </button>
+
+
+            <button
+                class="panel-button"
+                onclick="showBusinesses()">
+
+                📊 My Businesses
+
+            </button>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       VEHICLES
+    ===================================================== */
+
+    if (type === "vehicle") {
+
+        content.innerHTML = `
+
+            <h2>🚗 Vehicles</h2>
+
+            <p>
+                Purchase and own vehicles in Hustle City.
+            </p>
+
+
+            <button
+                class="panel-button"
+                onclick="showMessage(
+                    '🚘 Vehicle dealership coming next.'
+                )">
+
+                🚘 Vehicle Dealership
+
+            </button>
+
+
+            <button
+                class="panel-button"
+                onclick="showVehicles()">
+
+                🚙 My Vehicles
+
+            </button>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       POLICE
+    ===================================================== */
+
+    if (type === "police") {
+
+        content.innerHTML = `
+
+            <h2>👮 Police Department</h2>
+
+            <p>
+                Law enforcement operates throughout
+                Hustle City.
+            </p>
+
+
+            <button
+                class="panel-button"
+                onclick="showMessage(
+                    '🚨 Crime system will be added to the city.'
+                )">
+
+                🚨 Crime
+
+            </button>
+
+
+            <button
+                class="panel-button"
+                onclick="showMessage(
+                    '📋 Your police records will appear here.'
+                )">
+
+                📋 Police Records
+
+            </button>
+
+
+            <button
+                class="panel-button"
+                onclick="openPanel('justice')">
+
+                ⚖️ Justice System
+
+            </button>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       JUSTICE
+    ===================================================== */
+
+    if (type === "justice") {
+
+        content.innerHTML = `
+
+            <h2>⚖️ Justice System</h2>
+
+            <p>
+                Courts, trials, fines and legal cases
+                will operate here.
+            </p>
+
+
+            <button
+                class="panel-button"
+                onclick="showMessage(
+                    '⚖️ Court system coming next.'
+                )">
+
+                🏛️ Court
+
+            </button>
+
+
+            <button
+                class="panel-button"
+                onclick="showMessage(
+                    '📋 Your legal cases will appear here.'
+                )">
+
+                📋 My Cases
+
+            </button>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       RANKINGS
+    ===================================================== */
+
+    if (type === "rankings") {
+
+        content.innerHTML = `
+
+            <h2>🏆 Hustle Rankings</h2>
+
+
+            <div class="panel-button">
+
+                🥇
+
+                <strong>
+                    ${escapeHTML(player.name)}
+                </strong>
+
+                <br>
+
+                ₦${player.balance.toLocaleString()}
+
+            </div>
+
+
+            <button
+                class="panel-button"
+                onclick="showMessage(
+                    '💰 Global wealth rankings coming with multiplayer.'
+                )">
+
+                💰 Wealth Ranking
+
+            </button>
+
+
+            <button
+                class="panel-button"
+                onclick="showMessage(
+                    '🏢 Business rankings coming with multiplayer.'
+                )">
+
+                🏢 Business Ranking
+
+            </button>
+
+
+            <button
+                class="panel-button"
+                onclick="showMessage(
+                    '⭐ Reputation rankings coming with multiplayer.'
+                )">
+
+                ⭐ Reputation Ranking
+
+            </button>
+
+        `;
+
+        return;
+
+    }
+
+}
+
+
+/* =========================================================
+   DEPOSIT MONEY
+========================================================= */
+
+function depositMoney() {
+
+    const amount =
+        Number(
+            prompt(
+                "How much would you like to deposit?"
+            )
+        );
+
+
+    if (!amount || amount <= 0) {
+
+        return;
+
+    }
+
+
+    if (amount > player.balance) {
+
+        alert("You don't have enough cash.");
+
+        return;
+
+    }
+
+
+    player.balance -= amount;
+
+    player.bankBalance += amount;
+
+
+    addTransaction(
+        "Deposit",
+        amount,
+        "Cash deposited into Hustle Bank"
+    );
+
+
+    updateMoneyDisplay();
+
+    openPanel("bank");
+
+}
+
+
+/* =========================================================
+   WITHDRAW MONEY
+========================================================= */
+
+function withdrawMoney() {
+
+    const amount =
+        Number(
+            prompt(
+                "How much would you like to withdraw?"
+            )
+        );
+
+
+    if (!amount || amount <= 0) {
+
+        return;
+
+    }
+
+
+    if (amount > player.bankBalance) {
+
+        alert(
+            "Insufficient bank balance."
+        );
+
+        return;
+
+    }
+
+
+    player.bankBalance -= amount;
+
+    player.balance += amount;
+
+
+    addTransaction(
+        "Withdrawal",
+        amount,
+        "Money withdrawn from Hustle Bank"
+    );
+
+
+    updateMoneyDisplay();
+
+    openPanel("bank");
+
+}
+
+
+/* =========================================================
+   TRANSFER MONEY
+========================================================= */
+
+function transferMoney() {
+
+    const recipient =
+        document
+            .getElementById("recipient")
+            .value
+            .trim();
+
+
+    const amount =
+        Number(
+            document
+                .getElementById("transferAmount")
+                .value
+        );
+
+
+    if (!recipient) {
+
+        alert("Enter the recipient username.");
+
+        return;
+
+    }
+
+
+    if (!amount || amount <= 0) {
+
+        alert("Enter a valid amount.");
+
+        return;
+
+    }
+
+
+    if (amount > player.balance) {
+
+        alert("Insufficient cash.");
+
+        return;
+
+    }
+
+
+    if (
+        recipient.toLowerCase() ===
+        player.name.toLowerCase()
+    ) {
+
+        alert(
+            "You cannot transfer money to yourself."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       This is currently a local prototype.
+
+       When Supabase multiplayer is connected,
+       this function will perform a secure
+       server-side player-to-player transfer.
+    */
+
+
+    player.balance -= amount;
+
+
+    addTransaction(
+        "Transfer",
+        amount,
+        `Transfer sent to ${recipient}`
+    );
+
+
+    updateMoneyDisplay();
+
+
+    alert(
+        `₦${amount.toLocaleString()} virtual money sent to ${recipient}.`
+    );
+
+
+    openPanel("transfer");
+
+}
+
+
+/* =========================================================
+   TRANSACTION HISTORY
+========================================================= */
+
+function addTransaction(
+    type,
+    amount,
+    description
+) {
+
+    player.transactions.unshift({
+
+        type: type,
+
+        amount: amount,
+
+        description: description,
+
+        date:
+            new Date().toLocaleString()
+
+    });
+
+}
+
+
+function showTransactions() {
+
+    const content =
+        document.getElementById("panelContent");
+
+
+    let transactionsHTML = "";
+
+
+    if (player.transactions.length === 0) {
+
+        transactionsHTML = `
+            <p>No transactions yet.</p>
+        `;
+
+    } else {
+
+        player.transactions.forEach(
+            function (transaction) {
+
+                transactionsHTML += `
+
+                    <div class="panel-button">
+
+                        <strong>
+                            ${escapeHTML(
+                                transaction.type
+                            )}
+                        </strong>
+
+                        <br>
+
+                        ${escapeHTML(
+                            transaction.description
+                        )}
+
+                        <br>
+
+                        <small>
+                            ₦${transaction.amount.toLocaleString()}
+                            <br>
+                            ${escapeHTML(
+                                transaction.date
+                            )}
+                        </small>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+    }
+
+
+    content.innerHTML = `
+
+        <h2>📜 Transaction History</h2>
+
+        ${transactionsHTML}
+
+    `;
+
+}
+
+
+/* =========================================================
+   BUSINESSES
+========================================================= */
+
+function showBusinesses() {
+
+    const content =
+        document.getElementById("panelContent");
+
+
+    if (player.businesses.length === 0) {
+
+        content.innerHTML = `
+
+            <h2>📊 My Businesses</h2>
+
+            <p>
+                You don't own any businesses yet.
+            </p>
+
+            <button
+                class="panel-button"
+                onclick="showMessage(
+                    '🏪 The business marketplace will be built next.'
+                )">
+
+                🏪 Open Marketplace
+
+            </button>
+
+        `;
+
+        return;
+
+    }
+
+
+    let html = `
+        <h2>📊 My Businesses</h2>
+    `;
+
+
+    player.businesses.forEach(
+        function (business) {
+
+            html += `
+
+                <div class="panel-button">
+
+                    🏢
+                    ${escapeHTML(
+                        business.name
+                    )}
+
+                    <br>
+
+                    Value:
+                    ₦${business.value.toLocaleString()}
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    content.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   VEHICLES
+========================================================= */
+
+function showVehicles() {
+
+    const content =
+        document.getElementById("panelContent");
+
+
+    if (player.vehicles.length === 0) {
+
+        content.innerHTML = `
+
+            <h2>🚙 My Vehicles</h2>
+
+            <p>
+                You don't own any vehicles yet.
+            </p>
+
+            <button
+                class="panel-button"
+                onclick="showMessage(
+                    '🚘 Vehicle dealership will be built next.'
+                )">
+
+                🚘 Open Dealership
+
+            </button>
+
+        `;
+
+        return;
+
+    }
+
+
+    let html = `
+        <h2>🚙 My Vehicles</h2>
+    `;
+
+
+    player.vehicles.forEach(
+        function (vehicle) {
+
+            html += `
+
+                <div class="panel-button">
+
+                    🚗
+                    ${escapeHTML(
+                        vehicle.name
+                    )}
+
+                    <br>
+
+                    Value:
+                    ₦${vehicle.value.toLocaleString()}
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    content.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   CHAT
+========================================================= */
+
+function sendChatMessage() {
+
+    const input =
+        document.getElementById(
+            "chatMessage"
+        );
+
+
+    if (!input) {
+
+        return;
+
+    }
+
+
+    const message =
+        input.value.trim();
+
+
+    if (!message) {
+
+        return;
+
+    }
+
+
+    alert(
+        `Message ready for multiplayer chat:\n\n${message}`
+    );
+
+
+    input.value = "";
+
+}
+
+
+/* =========================================================
+   MESSAGE HELPER
+========================================================= */
+
+function showMessage(message) {
+
+    alert(message);
+
+}
+
+
+/* =========================================================
+   CLOSE PANEL
+========================================================= */
+
+function closePanel() {
+
+    document
+        .getElementById("gamePanel")
+        .classList.add("hidden");
+
+}
+
+
+/* =========================================================
+   BASIC HTML ESCAPING
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replaceAll("&", "&amp;")
+
+        .replaceAll("<", "&lt;")
+
+        .replaceAll(">", "&gt;")
+
+        .replaceAll('"', "&quot;")
+
+        .replaceAll("'", "&#039;");
+
+}
+
+
+/* =========================================================
+   KEYBOARD CONTROLS
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            document
+                .getElementById("gameScreen")
+                .classList
+                .contains("hidden")
+        ) {
+
+            return;
+
+        }
+
+
+        if (event.key === "ArrowUp") {
+
+            move("up");
+
+        }
+
+
+        if (event.key === "ArrowDown") {
+
+            move("down");
+
+        }
+
+
+        if (event.key === "ArrowLeft") {
+
+            move("left");
+
+        }
+
+
+        if (event.key === "ArrowRight") {
+
+            move("right");
+
+        }
+
+    }
+);

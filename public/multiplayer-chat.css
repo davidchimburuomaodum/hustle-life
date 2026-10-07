@@ -1,0 +1,350 @@
+/* =========================================================
+   HUSTLE LIFE MULTIPLAYER CHAT
+========================================================= */
+
+.hustle-chat-panel {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 99999;
+
+    background: rgba(0, 0, 0, 0.92);
+
+    color: white;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+.hustle-chat-panel.hidden {
+
+    display: none;
+
+}
+
+
+.hustle-chat-header {
+
+    min-height: 65px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 12px 16px;
+
+    background: #111827;
+
+    border-bottom: 1px solid #374151;
+
+}
+
+
+.hustle-chat-header strong {
+
+    display: block;
+
+    font-size: 18px;
+
+}
+
+
+.hustle-chat-header small {
+
+    color: #9ca3af;
+
+}
+
+
+.hustle-chat-header button {
+
+    border: 0;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 22px;
+
+}
+
+
+.hustle-chat-body {
+
+    flex: 1;
+
+    display: flex;
+
+    min-height: 0;
+
+}
+
+
+.hustle-chat-players {
+
+    width: 220px;
+
+    overflow-y: auto;
+
+    padding: 10px;
+
+    background: #0b1120;
+
+    border-right: 1px solid #374151;
+
+}
+
+
+.hustle-chat-players h4 {
+
+    color: #9ca3af;
+
+    margin: 15px 5px 8px;
+
+}
+
+
+.hustle-global-button,
+.hustle-player-button {
+
+    width: 100%;
+
+    padding: 11px;
+
+    margin-bottom: 6px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    text-align: left;
+
+    color: white;
+
+    background: #1f2937;
+
+}
+
+
+.hustle-global-button {
+
+    background: #2563eb;
+
+}
+
+
+.hustle-player-button {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+
+.hustle-player-button b {
+
+    background: #ef4444;
+
+    border-radius: 50%;
+
+    min-width: 20px;
+
+    height: 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 11px;
+
+}
+
+
+.hustle-chat-main {
+
+    flex: 1;
+
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+.hustle-chat-title {
+
+    padding: 14px;
+
+    background: #111827;
+
+    border-bottom: 1px solid #374151;
+
+    font-weight: bold;
+
+}
+
+
+.hustle-chat-messages {
+
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding: 15px;
+
+}
+
+
+.hustle-message {
+
+    max-width: 80%;
+
+    margin-bottom: 12px;
+
+    padding: 9px 12px;
+
+    background: #1f2937;
+
+    border-radius: 10px;
+
+}
+
+
+.hustle-message.mine {
+
+    margin-left: auto;
+
+    background: #2563eb;
+
+}
+
+
+.hustle-message-name {
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    margin-bottom: 3px;
+
+    opacity: 0.8;
+
+}
+
+
+.hustle-message-text {
+
+    word-break: break-word;
+
+}
+
+
+.hustle-message small {
+
+    display: block;
+
+    margin-top: 4px;
+
+    opacity: 0.65;
+
+    font-size: 10px;
+
+}
+
+
+.hustle-chat-typing {
+
+    min-height: 20px;
+
+    padding: 0 15px;
+
+    color: #9ca3af;
+
+    font-size: 12px;
+
+}
+
+
+.hustle-chat-input {
+
+    display: flex;
+
+    gap: 8px;
+
+    padding: 10px;
+
+    background: #111827;
+
+    border-top: 1px solid #374151;
+
+}
+
+
+.hustle-chat-input input {
+
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 12px;
+
+    border: 1px solid #374151;
+
+    border-radius: 8px;
+
+    background: #030712;
+
+    color: white;
+
+    outline: none;
+
+}
+
+
+.hustle-chat-input button {
+
+    width: 48px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 20px;
+
+}
+
+
+@media (max-width: 600px) {
+
+    .hustle-chat-players {
+
+        width: 135px;
+
+    }
+
+
+    .hustle-message {
+
+        max-width: 90%;
+
+    }
+
+}

@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#05070b">
+    <meta name="description" content="Hustle Life - Build your empire, manage businesses, own properties and vehicles, and become the richest player in Hustle City.">
+    <title>Hustle Life</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- =====================================================
+     LOGIN SCREEN
+===================================================== -->
+
+<div id="loginScreen" class="screen">
+
+    <div class="login-card">
+
+        <div class="logo">HL</div>
+
+        <h1>HUSTLE LIFE</h1>
+
+        <p>Build your empire. Live your life.</p>
+
+        <input
+            id="username"
+            type="text"
+            maxlength="20"
+            placeholder="Enter your character name"
+            autocomplete="off"
+        >
+
+        <button
+            class="primary-btn"
+            onclick="showCharacterCreation()">
+            CONTINUE
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     CHARACTER CREATION
+===================================================== -->
+
+<div id="characterScreen" class="screen hidden">
+
+    <div class="character-card">
+
+        <h1>👤 CREATE CHARACTER</h1>
+
+        <p>
+            Choose who you will become in Hustle City.
+        </p>
+
+        <div class="character-preview">
+
+            <div id="characterAvatar">
+                👨🏿
+            </div>
+
+            <strong id="previewName">
+                Your Character
+            </strong>
+
+        </div>
+
+        <label for="characterName">
+            Character Name
+        </label>
+
+        <input
+            id="characterName"
+            type="text"
+            maxlength="20"
+            placeholder="Character name"
+            autocomplete="off"
+        >
+
+        <label>
+            Gender
+        </label>
+
+        <div class="choice-row">
+
+            <button
+                id="maleBtn"
+                onclick="selectGender('male')">
+                👨🏿 Male
+            </button>
+
+            <button
+                id="femaleBtn"
+                onclick="selectGender('female')">
+                👩🏿 Female
+            </button>
+
+        </div>
+
+        <label for="age">
+            Age
+        </label>
+
+        <select id="age">
+
+            <option value="18">18</option>
+            <option value="21">21</option>
+            <option value="25">25</option>
+            <option value="30">30</option>
+            <option value="35">35</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+
+        </select>
+
+        <button
+            class="primary-btn"
+            onclick="createCharacter()">
+            CREATE CHARACTER
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN GAME
+===================================================== -->
+
+<div id="gameScreen" class="hidden">
+
+    <!-- TOP BAR -->
+
+    <header class="topbar">
+
+        <div class="player-info">
+
+            <div
+                class="avatar"
+                id="topAvatar">
+                👨🏿
+            </div>
+
+            <div>
+
+                <strong id="playerName">
+                    Player
+                </strong>
+
+                <small id="playerAge">
+                    Citizen
+                </small>
+
+            </div>
+
+        </div>
+
+        <div class="money">
+
+            <small>
+                Cash
+            </small>
+
+            <strong>
+                <span id="balance">₦100,000,000,000</span>
+            </strong>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         CITY
+    ================================================== -->
+
+    <main class="city">
+
+        <div class="city-header">
+
+            <h1>
+                🌆 HUSTLE CITY
+            </h1>
+
+            <p>
+                Downtown District
+            </p>
+
+        </div>
+
+
+        <!-- CITY BUILDINGS -->
+
+        <div
+            class="building building-1"
+            onclick="locationInteraction('business')">
+
+            🏢
+
+            <span>
+                Business Tower
+            </span>
+
+        </div>
+
+
+        <div
+            class="building building-2"
+            onclick="locationInteraction('home')">
+
+            🏠
+
+            <span>
+                Residential Area
+            </span>
+
+        </div>
+
+
+        <div
+            class="building building-3"
+            onclick="locationInteraction('bank')">
+
+            🏦
+
+            <span>
+                Hustle Bank
+            </span>
+
+        </div>
+
+
+        <div
+            class="building building-4"
+            onclick="locationInteraction('police')">
+
+            🚓
+
+            <span>
+                Police Station
+            </span>
+
+        </div>
+
+
+        <!-- PLAYER -->
+
+        <div
+            id="player"
+            class="player">
+
+            👨🏿
+
+        </div>
+
+
+        <!-- JOYSTICK -->
+
+        <div class="joystick">
+
+            <button
+                onclick="move('up')">
+                ▲
+            </button>
+
+            <div>
+
+                <button
+                    onclick="move('left')">
+                    ◀
+                </button>
+
+                <button
+                    onclick="move('down')">
+                    ▼
+                </button>
+
+                <button
+                    onclick="move('right')">
+                    ▶
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- INTERACT -->
+
+        <button
+            class="interact"
+            onclick="interact()">
+
+            ⚡ INTERACT
+
+        </button>
+
+    </main>
+
+
+    <!-- =================================================
+         BOTTOM NAVIGATION
+    ================================================== -->
+
+    <nav class="bottom-nav">
+
+        <button
+            onclick="openPanel('phone')">
+
+            📱
+
+            <span>
+                Phone
+            </span>
+
+        </button>
+
+
+        <button
+            onclick="openPanel('bank')">
+
+            🏦
+
+            <span>
+                Bank
+            </span>
+
+        </button>
+
+
+        <button
+            onclick="openPanel('business')">
+
+            🏢
+
+            <span>
+                Business
+            </span>
+
+        </button>
+
+
+        <button
+            onclick="openPanel('vehicle')">
+
+            🚗
+
+            <span>
+                Vehicles
+            </span>
+
+        </button>
+
+
+        <button
+            onclick="openPanel('rankings')">
+
+            🏆
+
+            <span>
+                Rankings
+            </span>
+
+        </button>
+
+    </nav>
+
+
+    <!-- =================================================
+         GAME PANEL
+    ================================================== -->
+
+    <div
+        id="gamePanel"
+        class="panel hidden">
+
+        <div class="panel-box">
+
+            <button
+                class="close"
+                onclick="closePanel()">
+
+                ✕
+
+            </button>
+
+            <div id="panelContent">
+
+                <!-- Dynamic panels appear here -->
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         BUSINESS MARKETPLACE
+    ================================================== -->
+
+    <section
+        id="businessSection"
+        class="game-section">
+
+        <div class="section-header">
+
+            <h2>
+                🏢 Business Marketplace
+            </h2>
+
+            <p>
+                Buy businesses and build your empire.
+            </p>
+
+        </div>
+
+
+        <div
+            id="businessMarketplace">
+
+            <!-- Businesses generated by game.js -->
+
+        </div>
+
+
+        <div class="owned-business-section">
+
+            <h2>
+                💼 My Businesses
+            </h2>
+
+            <button
+                id="collectAllRevenue"
+                class="primary-btn">
+
+                💰 Collect All Revenue
+
+            </button>
+
+
+            <div
+                id="ownedBusinesses">
+
+                <!-- Owned businesses generated by game.js -->
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         PROPERTY MARKETPLACE
+    ================================================== -->
+
+    <section
+        id="propertySection"
+        class="game-section">
+
+        <div class="section-header">
+
+            <h2>
+                🏠 Property Marketplace
+            </h2>
+
+            <p>
+                Buy properties and expand your wealth.
+            </p>
+
+        </div>
+
+
+        <div
+            id="propertyMarketplace">
+
+            <!-- Properties generated by game.js -->
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         VEHICLE MARKETPLACE
+    ================================================== -->
+
+    <section
+        id="vehicleSection"
+        class="game-section">
+
+        <div class="section-header">
+
+            <h2>
+                🚗 Vehicle Marketplace
+            </h2>
+
+            <p>
+                Buy cars, supercars and private jets.
+            </p>
+
+        </div>
+
+
+        <div
+            id="vehicleMarketplace">
+
+            <!-- Vehicles generated by game.js -->
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         PLAYER STATS
+    ================================================== -->
+
+    <section
+        id="statsSection"
+        class="game-section">
+
+        <div class="section-header">
+
+            <h2>
+                📊 Player Statistics
+            </h2>
+
+        </div>
+
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+
+                <span>
+                    💰 Cash
+                </span>
+
+                <strong id="cashBalance">
+                    ₦100,000,000,000
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>
+                    🏦 Bank
+                </span>
+
+                <strong id="bankBalance">
+                    ₦0
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>
+                    ⭐ Level
+                </span>
+
+                <strong id="level">
+                    1
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>
+                    ⚡ XP
+                </span>
+
+                <strong id="xp">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>
+                    🏢 Businesses
+                </span>
+
+                <strong id="businessCount">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>
+                    🏠 Properties
+                </span>
+
+                <strong id="propertyCount">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>
+                    🚗 Vehicles
+                </span>
+
+                <strong id="vehicleCount">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- HEALTH -->
+
+        <div class="stat-progress">
+
+            <div class="progress-label">
+
+                <span>
+                    ❤️ Health
+                </span>
+
+                <span id="health">
+                    100%
+                </span>
+
+            </div>
+
+            <div class="progress-track">
+
+                <div
+                    id="healthBar"
+                    class="progress-bar"
+                    style="width:100%">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ENERGY -->
+
+        <div class="stat-progress">
+
+            <div class="progress-label">
+
+                <span>
+                    ⚡ Energy
+                </span>
+
+                <span id="energy">
+                    100%
+                </span>
+
+            </div>
+
+            <div class="progress-track">
+
+                <div
+                    id="energyBar"
+                    class="progress-bar"
+                    style="width:100%">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- HAPPINESS -->
+
+        <div class="stat-progress">
+
+            <div class="progress-label">
+
+                <span>
+                    😊 Happiness
+                </span>
+
+                <span id="happiness">
+                    100%
+                </span>
+
+            </div>
+
+            <div class="progress-track">
+
+                <div
+                    id="happinessBar"
+                    class="progress-bar"
+                    style="width:100%">
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         BUSINESS QUICK ACTION
+    ================================================== -->
+
+    <section
+        id="businessQuickActions"
+        class="game-section">
+
+        <div class="section-header">
+
+            <h2>
+                ⚡ Business Actions
+            </h2>
+
+        </div>
+
+        <button
+            id="collectAllRevenue"
+            class="primary-btn">
+
+            💰 Collect Business Revenue
+
+        </button>
+
+    </section>
+
+
+    <!-- =================================================
+         HIDDEN DATA CONTAINERS
+    ================================================== -->
+
+    <div
+        id="businesses"
+        hidden>
+    </div>
+
+    <div
+        id="properties"
+        hidden>
+    </div>
+
+    <div
+        id="vehicles"
+        hidden>
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script src="game.js"></script>
+
+</body>
+</html>
