@@ -4521,16 +4521,18 @@ window.HustlePropertyUI = {
         panel.innerHTML = `
 
             <div style="
-                padding:20px;
+                padding:12px;
                 color:white;
                 background:#090d14;
-                min-height:100%;
-            ">
-
+                height:100%;
+                max-height:calc(100vh - 40px);
+                overflow-y:auto;
                 <div style="
                     display:flex;
                     justify-content:space-between;
                     align-items:center;
+                    margin-bottom:10px;
+                ">
                     margin-bottom:20px;
                 ">
 
@@ -4538,12 +4540,13 @@ window.HustlePropertyUI = {
 
                         <h2 style="margin:0;">
                             🏠 Properties
-                        </h2>
-
                         <p style="
                             color:#94a3b8;
-                            margin-top:5px;
+                            margin:3px 0 0;
+                            font-size:13px;
                         ">
+                            Build your property empire.
+                        </p>
                             Build your property empire.
                         </p>
 
@@ -4573,9 +4576,9 @@ window.HustlePropertyUI = {
 
                 <div style="
                     background:#111827;
-                    padding:18px;
-                    border-radius:14px;
-                    margin-top:20px;
+                    padding:12px;
+                    border-radius:10px;
+                    margin-top:10px;
                 ">
 
                     <h3>
@@ -4642,30 +4645,35 @@ window.HustlePropertyUI = {
             <div style="
                 background:#111827;
                 border:1px solid #1f2937;
-                border-radius:14px;
-                padding:18px;
-                margin-bottom:12px;
+                border-radius:10px;
+                padding:11px;
+                margin-bottom:8px;
             ">
 
                 <div style="
                     display:flex;
                     justify-content:space-between;
-                    gap:15px;
+                    align-items:center;
+                    gap:10px;
                 ">
 
-                    <div>
+                    <div style="
+                        min-width:0;
+                    ">
 
                         <h3 style="
-                            margin:0 0 8px;
+                            margin:0 0 4px;
+                            font-size:16px;
+                            line-height:1.2;
                         ">
                             ${property.icon}
                             ${property.name}
                         </h3>
 
-
                         <p style="
                             color:#94a3b8;
-                            margin:4px 0;
+                            margin:2px 0;
+                            font-size:13px;
                         ">
                             ${
                                 owned
@@ -4676,10 +4684,10 @@ window.HustlePropertyUI = {
                             }
                         </p>
 
-
                         <p style="
                             color:#94a3b8;
-                            margin:4px 0;
+                            margin:2px 0;
+                            font-size:13px;
                         ">
                             Rent:
                             ₦${this.formatMoney(rent)}
@@ -4687,8 +4695,10 @@ window.HustlePropertyUI = {
 
                     </div>
 
-
-                    <div>
+                    <div style="
+                        flex-shrink:0;
+                        text-align:right;
+                    ">
 
                         ${
                             !owned
@@ -4705,9 +4715,10 @@ window.HustlePropertyUI = {
                                         background:#16a34a;
                                         color:white;
                                         border:0;
-                                        padding:10px 14px;
-                                        border-radius:9px;
+                                        padding:8px 13px;
+                                        border-radius:8px;
                                         font-weight:bold;
+                                        font-size:13px;
                                     ">
                                     Buy
                                 </button>
@@ -4728,12 +4739,13 @@ window.HustlePropertyUI = {
                                         background:#2563eb;
                                         color:white;
                                         border:0;
-                                        padding:10px 14px;
-                                        border-radius:9px;
+                                        padding:7px 10px;
+                                        border-radius:7px;
                                         font-weight:bold;
-                                        margin-bottom:7px;
+                                        font-size:12px;
+                                        margin-bottom:4px;
                                     ">
-                                    💰 Collect Rent
+                                    💰 Rent
                                 </button>
 
                                 <br>
@@ -4748,9 +4760,10 @@ window.HustlePropertyUI = {
                                         background:#7c3aed;
                                         color:white;
                                         border:0;
-                                        padding:10px 14px;
-                                        border-radius:9px;
+                                        padding:7px 10px;
+                                        border-radius:7px;
                                         font-weight:bold;
+                                        font-size:12px;
                                     ">
                                     ⬆️ Upgrade
                                 </button>
@@ -4766,7 +4779,6 @@ window.HustlePropertyUI = {
 
         `;
     },
-
 
     buy(id) {
 
