@@ -532,10 +532,56 @@ function updatePlayer() {
 
 function interact() {
 
-    alert(
-        `Welcome to Hustle City, ${player.name}!\n\n` +
-        `Your current cash: ₦${player.balance.toLocaleString()}`
+    const choice = prompt(
+        "⚡ HUSTLE CITY\n\n" +
+        "Choose an action:\n\n" +
+        "1. 👤 View Profile\n" +
+        "2. 💰 View Cash\n" +
+        "3. 🏠 Properties\n" +
+        "4. 🏢 Businesses\n" +
+        "5. 🚗 Vehicles\n" +
+        "6. 📱 Phone\n" +
+        "7. ❌ Cancel\n\n" +
+        "Enter a number:"
     );
+
+    switch (choice) {
+
+        case "1":
+            alert(
+                "👤 PROFILE\n\n" +
+                "Name: " + player.name + "\n" +
+                "Age: " + player.age + "\n" +
+                "Status: " + player.status
+            );
+            break;
+
+        case "2":
+            alert(
+                "💰 CASH\n\n" +
+                "₦" + player.balance.toLocaleString()
+            );
+            break;
+
+        case "3":
+            openPanel("property");
+            break;
+
+        case "4":
+            openPanel("business");
+            break;
+
+        case "5":
+            openPanel("vehicle");
+            break;
+
+        case "6":
+            openPanel("phone");
+            break;
+
+        default:
+            break;
+    }
 
 }
 
@@ -575,10 +621,9 @@ function locationInteraction(location) {
 
     if (location === "home") {
 
-        showMessage(
-            "🏠 Residential Area\n\n" +
-            "Properties will be available here."
-        );
+        openPanel("property");
+
+        return;
 
     }
 
