@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hustle Life</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="loginScreen" class="screen">
+    <div class="login-box">
+        <h1>HUSTLE LIFE</h1>
+        <p>Build your empire. Rule your city.</p>
+
+        <input id="username" type="text" placeholder="Enter your name">
+
+        <button onclick="startGame()">ENTER CITY</button>
+    </div>
+</div>
+
+<div id="gameScreen" class="hidden">
+
+    <header>
+        <div>
+            <h2>HUSTLE LIFE</h2>
+            <span id="playerName">Player</span>
+        </div>
+
+        <div class="balance">
+            ₦<span id="balance">100000000000</span>
+        </div>
+    </header>
+
+    <main>
+
+        <section class="city">
+            <div class="city-title">
+                <h1>🌍 HUSTLE CITY</h1>
+                <p>Welcome to your new life.</p>
+            </div>
+
+            <div class="player">👤</div>
+
+            <div class="joystick">
+                <button onclick="move('up')">▲</button>
+                <div>
+                    <button onclick="move('left')">◀</button>
+                    <button onclick="move('down')">▼</button>
+                    <button onclick="move('right')">▶</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="menu">
+
+            <button onclick="openPanel('phone')">📱 Phone</button>
+            <button onclick="openPanel('chat')">💬 Chat</button>
+            <button onclick="openPanel('transfer')">💸 Transfer</button>
+            <button onclick="openPanel('business')">🏢 Business</button>
+            <button onclick="openPanel('police')">👮 Police</button>
+            <button onclick="openPanel('justice')">⚖️ Justice</button>
+            <button onclick="openPanel('rankings')">🏆 Rankings</button>
+
+        </section>
+
+        <section id="panel" class="panel">
+
+            <h2>📱 Virtual Phone</h2>
+            <p>Your phone connects you to Hustle City.</p>
+
+            <div class="phone-actions">
+                <button onclick="openPanel('chat')">💬 Messages</button>
+                <button onclick="openPanel('transfer')">💸 Send Money</button>
+                <button onclick="alert('Calling feature coming soon!')">📞 Calls</button>
+            </div>
+
+        </section>
+
+        <div class="ad">
+            📺 Advertisement
+        </div>
+
+    </main>
+
+</div>
+
+<script src="game.js"></script>
+
+</body>
+</html>
