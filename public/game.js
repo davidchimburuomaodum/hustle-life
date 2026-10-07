@@ -621,7 +621,7 @@ function locationInteraction(location) {
 
     if (location === "home") {
 
-        openPanel("property");
+        HustlePropertyUI.open();
 
         return;
 
